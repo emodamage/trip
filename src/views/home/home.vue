@@ -8,8 +8,8 @@
     <!-- 新房特惠 -->
     <home-categories></home-categories>
     <!-- 热门精选 -->
+    <!-- 房间列表 -->
     <home-content></home-content>
-    <button @click="moreBtnClick">加载更多</button>
   </div>
 </template>
 
@@ -19,6 +19,8 @@ import HomeSearchBox from './cpns/home-search-box.vue'
 import useHomeStore from '@/stores/modules/home';
 import HomeCategories from '@/views/home/cpns/home-categories.vue'
 import homeContent from '@/views/home/cpns/home-content.vue';
+import useScroll from '@/hooks/useScroll'
+import { toRefs, watch } from 'vue';
 
 const homeStore = useHomeStore()
 // 热门建议
@@ -28,12 +30,20 @@ homeStore.fetchCategoriesData()
 //房间列表
 homeStore.fetchHouselistData()
 
-const moreBtnClick = () => {
-  homeStore.fetchHouselistData()
-}
+const { isReachBottom } = useScroll()
+watch(isReachBottom, (newValue) => {
+  if (newValue) {
+    homeStore.fetchHouselistData().then(() => {
+      isReachBottom.value = false
+    })
+  }
+})
 </script>
 
 <style lang="less" scoped>
+.home {
+  padding-bottom: 60px;
+}
 .banner {
   img {
     width: 100%;
