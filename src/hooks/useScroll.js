@@ -1,21 +1,25 @@
 import { onMounted, onUnmounted, ref } from 'vue';
+import { throttle } from 'underscore'
 
-export default function useScroll(reachBottomCallback) {
+export default function useScroll() {
   const isReachBottom = ref(false)
-  
+  const clientHeight = ref(0)
+  const scrollTop = ref(0)
+  const scrollHeight = ref(0)
   // 监听Windows滚动，用来达到房间列表底部时自动请求数据
-  const scrollListenerHandle = () => {
+  const scrollListenerHandle = throttle(() => {
     //文档的高度
-    const clientHeight = document.documentElement.clientHeight
+    clientHeight.value = document.documentElement.clientHeight
     //文档滚动的距离
-    const scrollTop = document.documentElement.scrollTop
+    scrollTop.value = document.documentElement.scrollTop
     //文档可滚动的高度
-    const scrollHeight = document.documentElement.scrollHeight
+    scrollHeight.value = document.documentElement.scrollHeight 
     // -1 是因为scrollTop有小数
-    if (clientHeight + scrollTop >= scrollHeight - 1) {
-      if (reachBottomCallback) reachBottomCallback()
+    if (clientHeight.value + scrollTop.value >= scrollHeight.value - 1 ) {
+      isReachBottom.value = true
     }
-  }
+
+  }, 1000)
 
   onMounted(() => {
     window.addEventListener('scroll', scrollListenerHandle)
@@ -26,6 +30,9 @@ export default function useScroll(reachBottomCallback) {
   })
 
   return {
-    isReachBottom
+    isReachBottom,
+    clientHeight,
+    scrollTop,
+    scrollHeight
   }
 }
