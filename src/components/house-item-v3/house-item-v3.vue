@@ -1,5 +1,5 @@
 <template>
-  <div class="house-item">
+  <div class="house-item" >
     <div class="item-inner">
       <div class="cover">
         <img :src="itemData.image.url" alt="">
@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   itemData: {
     type: Object,
     default: () => ({})
