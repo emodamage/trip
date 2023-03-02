@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { BASE_URL, TIMEOUT } from './config'
 import useMainStore from '@/stores/modules/main'
+
+
 const mainStore = useMainStore()
 class HYRequest {
   constructor(baseURL, timeout=10000) {
@@ -15,7 +17,7 @@ class HYRequest {
       return err
     })
     this.instance.interceptors.response.use(res => {
-      mainStore.isLoading = true
+      mainStore.isLoading = false
       return res
     }, err => {
       return err

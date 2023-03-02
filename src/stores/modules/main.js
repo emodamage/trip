@@ -6,7 +6,7 @@ const useMainStore = defineStore('main', {
   state: () => ({
     startDate,
     endDate,
-    isLoading: true
+    isLoading: false
   })
 })
 
