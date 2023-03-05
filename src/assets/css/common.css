@@ -3,6 +3,8 @@
   --line-color: #faf8f9;
   --van-search-left-icon-color: var(--primary-color);
   --theme-linear-gradient: linear-gradient(90deg, #fa8c1d, #fcaf3f);
+  --van-nav-bar-text-color: var(--primary-color);
+  --van-nav-bar-icon-color: var(--primary-color)
 }
 body {
   font-size: 14px;
@@ -17,4 +19,11 @@ body {
 }
 .bottom-gray-line {
   border-bottom: 1px solid var(--line-color);
+}
+
+.icon_check {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: url(../img/detail/icon_check.png) 0 0 / 100% 100%;
 }
